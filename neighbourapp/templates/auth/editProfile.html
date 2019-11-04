@@ -1,0 +1,26 @@
+{% extends 'base.html'%}
+{% load bootstrap4 %}
+{% block content%}
+{{ block.super}}
+<br>
+<br>
+<br>
+<h3 class="card-header" style="font-family: 'Zhi Mang Xing', cursive;">
+    <strong>Update profile</strong>
+</h3>
+
+<div class="card-body">
+
+    <form class="text-center" style="color: #757575;" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% bootstrap_form uform %}
+        {% bootstrap_form pform %}
+
+
+        <div class=" form-group">
+            <button type="submit" class="btn btn-info">Info</button>
+        </div>
+
+    </form>
+</div>
+{% endblock%}
