@@ -3,16 +3,17 @@ from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login,logout
 from django.contrib.auth.decorators import login_required
-from .models import Neighbour,Police,Business
+from .models import Neighbour,Police,Business,Post
 from django.contrib import messages
-from .forms import CreateProfile,CreateNeighbour,UpdateProfile,UpdateNeighbour,UpdateUser,UserUpdate
+from .forms import CreateProfile,CreateNeighbour,UpdateProfile,UpdateNeighbour,UpdateUser,UserUpdate,PostForm
 from .email import send_welcome_email
 
 # Create your views here.
 
 def homePage(request):
-    
-    return render(request,'neighbour/homePage.html')
+    posts=Post.objects.all()
+    user=request.user
+    return render(request,'neighbour/homePage.html' ,{'posts':posts, 'user':user})
 
 def signUp(request):
     currentUser=request.user
@@ -69,35 +70,8 @@ def logOut(request):
     return redirect('logIn')
 
 
-# def viewProfile(request):
-#     if request.method=='POST':
-        
-#         profileForm=UpdateProfile(instance=request.user.profile)
-#         # neighbourForm=UpdateNeighbour(instance=request.user.neighbour)
-#         userForm=UpdateUser(request.POST,instance=request.user)
-        
-
-#         if userForm.is_valid() and profileForm.is_valid() and neighbourForm.is_valid():
-#             userForm.save()
-#             profileForm.save()
-#             # neighbourForm.save()
-            
-#             messages.success(request,f' your account has been updated successfuly ')
-#             return redirect('viewProfile')
-#     else: 
-#         userForm=UpdateUser(instance=request.user)
-#         profileForm=UpdateProfile(instance=request.user.profile)
-#         # neighbourForm=UpdateNeighbour(instance=request.user.neighbour)
-        
-#     context={
-#         'uform':userForm,
-#         'pform':profileForm,
-#         # 'nform':neighbourForm
-#         }
-#     return render(request,'auth/profile.html',context)
-
-
 def viewProfile(request):
+    posts=Post.objects.filter(user__username=request.user.username)
     if request.method == 'POST':
         uform = UpdateUser(request.POST, instance=request.user)
         pform = UpdateProfile(request.POST,
@@ -121,7 +95,33 @@ def viewProfile(request):
     context = {
         'uform': uform,
         'pform': pform,
-        'nform': nform
+        'nform': nform,
+        'posts':posts,
     }
 
     return render(request, 'auth/profile.html', context)
+
+
+
+
+@login_required(login_url='/login/')
+def post(request):
+    current_user = request.user
+    if request.method=='POST':
+        form=PostForm(request.POST,request.FILES)
+        if form.is_valid():
+            post=form.save(commit=False)
+            post.user=current_user
+            post.save()
+
+            if 'next' in request.POST:
+                return redirect(request.POST.get('next'))
+            else:
+                return redirect('homePage' )
+    else:
+        form=PostForm()
+    return render(request,'neighbour/post.html',{'form':form})
+
+
+
+

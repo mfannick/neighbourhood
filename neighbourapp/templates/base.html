@@ -30,8 +30,9 @@
     </div>
     {% endfor %}
     {% endif %}
+    {% include 'navbar.html'%}
     {% block content%}
-    {% include navbar.html%}
+  
     {% block styles %}
     {% bootstrap_css %}
     <!-- <link rel="stylesheet" href="{% static 'css/instasave.css' %}"> -->

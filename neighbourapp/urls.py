@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^login/$', views.logIn, name='logIn'),
     url(r'^logout/$', views.logOut, name='logOut'),
     url(r'^viewProfile/$', views.viewProfile, name='viewProfile'),
+    url(r'^post/$', views.post, name='post'),
     
 
 ]

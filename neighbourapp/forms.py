@@ -27,6 +27,11 @@ class CreateProfile(forms.ModelForm):
         model=models.Profile
         fields=['profileImage','bio']
 
+class PostForm(forms.ModelForm):
+    class Meta:
+        model=models.Post
+        fields=['postName','postText']
+
 class CreateNeighbour(forms.ModelForm):
     class Meta:
         model=models.Neighbour

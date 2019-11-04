@@ -55,4 +55,17 @@ class Profile(models.Model):
 
 
 
+class Post(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    postName=models.CharField(max_length=30)
+    postText=models.TextField()
+    
+
+
+    def __str__(self):
+        return self.user.username
+
+
+
+
 
