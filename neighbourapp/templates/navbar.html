@@ -2,36 +2,34 @@
 <link rel="stylesheet" href="w3.css">
 <!-- Navbar (sit on top) -->
 <div class="w3-top">
-  <div class="w3-bar w3-white w3-wide w3-padding w3-card">
-    <a href="{% url 'homePage' %}" class="w3-bar-item w3-button"><b></b>Neighbourhood</a>
-    <a class="w3-bar-item w3-button">
-      <form action="#">
-        {% csrf_token%}
-        <div class="form-group">
-          <input id="input-field" type="text" placeholder='search' style="text-align: center" name="project">
+    <div class="w3-bar w3-white w3-wide w3-padding w3-card">
+        <a href="{% url 'homePage' %}" class="w3-bar-item w3-button"><b></b>Neighbourhood</a>
+
+
+        <!-- Float links to the right. Hide them on small screens -->
+        <div class="w3-right w3-hide-small">
+            {% if user.is_authenticated%}
+
+            <a class="w3-bar-item w3-button">
+                <form action="#">
+                    {% csrf_token%}
+                    <div class="form-group">
+                        <input id="input-field" type="text" placeholder='search' style="text-align: center"
+                            name="project">
+                    </div>
+                </form>
+            </a>
+            <a href="{% url 'post'%}" class="w3-bar-item w3-button">Post</a>
+            <a href="{% url 'viewProfile'%}" class="w3-bar-item w3-button">Edit Profile</a>
+            <a href="#" class="w3-bar-item w3-button" style="color: grey;font-size: 15px">{{user.username}}</a>
+            <a href="#" class="w3-bar-item w3-button w3-right">
+                <form action="{% url 'logOut'%}" method="post">
+                    {% csrf_token%}
+                    <input type="submit" value="logOut">
+                </form>
+            </a><br>
+            {% endif%}
         </div>
-      </form>
-    </a>
-   
-    <!-- Float links to the right. Hide them on small screens -->
-    <div class="w3-right w3-hide-small">
-      {% if user.is_authenticated%}
 
-     
-      <a href="{% url 'post'%}" class="w3-bar-item w3-button" >Post</a>
-      <a href="{% url 'viewProfile'%}" class="w3-bar-item w3-button" >Edit Profile</a>
-      <a href="#" class="w3-bar-item w3-button" style="color: grey;font-size: 15px">{{user.username}}</a>
-      <a href="#" class="w3-bar-item w3-button w3-right">
-        <form action="{% url 'logOut'%}" method="post">
-          {% csrf_token%}
-          <input type="submit" value="logOut">
-        </form>
-      </a><br>
-      {% else%}
-      <a href="{% url 'post'%}" class="w3-bar-item w3-button" >Post</a>
-      <a href="{% url 'logIn'%}" class="w3-bar-item w3-button" >log in</a>
-      {% endif%}
     </div>
-
-  </div>
 </div>

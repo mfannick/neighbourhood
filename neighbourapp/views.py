@@ -9,7 +9,7 @@ from .forms import CreateProfile,CreateNeighbour,UpdateProfile,UpdateNeighbour,U
 from .email import send_welcome_email
 
 # Create your views here.
-
+@login_required(login_url='/')
 def homePage(request):
     posts=Post.objects.all()
     user=request.user
@@ -69,7 +69,7 @@ def logOut(request):
         return redirect('logIn')
     return redirect('logIn')
 
-
+@login_required(login_url='/')
 def viewProfile(request):
     posts=Post.objects.filter(user__username=request.user.username)
     if request.method == 'POST':
@@ -104,7 +104,7 @@ def viewProfile(request):
 
 
 
-@login_required(login_url='/login/')
+@login_required(login_url='/')
 def post(request):
     current_user = request.user
     if request.method=='POST':

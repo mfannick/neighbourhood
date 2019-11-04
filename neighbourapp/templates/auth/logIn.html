@@ -41,7 +41,7 @@
                 <strong style="font-family: 'Zhi Mang Xing', cursive;">login</strong>
             </h3>
             <div class="card-body px-lg-5 pt-0">
-                <form action="/login/" class="text-center" style="color: #757575;" method="post">
+                <form action="/" class="text-center" style="color: #757575;" method="post">
                     {% csrf_token%}
                     {% bootstrap_form form%}
                     {% if request.GET.next%}
