@@ -30,7 +30,7 @@ class CreateProfile(forms.ModelForm):
 class PostForm(forms.ModelForm):
     class Meta:
         model=models.Post
-        fields=['postName','postText']
+        fields=['postName','postText','postImage','postNeighbourName']
 
 class CreateNeighbour(forms.ModelForm):
     class Meta:
