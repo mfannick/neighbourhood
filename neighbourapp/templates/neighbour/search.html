@@ -1,0 +1,93 @@
+<link href="https://fonts.googleapis.com/css?family=Liu+Jian+Mao+Cao|Pacifico&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="w3.css">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+<!-- Bootstrap core CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+<!-- Material Design Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.10/css/mdb.min.css" rel="stylesheet">
+
+
+<!-- CDN -->
+<!-- JQuery -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.10/js/mdb.min.js"></script>
+{%extends 'base.html'%}
+<br><br><br>
+{% block content %}
+<div class="container-fluid" style="position: relative ;margin-top: 100px;">
+
+  <div>
+    {% if businesses%}
+    <h2 style="font-family: 'Pacifico', cursive;text-decoration-line: underline;text-align: center">Found {{ businesses|length }} businesses of searched {{message}}</h2>
+    {% else %}
+    <h2 style="font-family: 'Pacifico', cursive;text-decoration-line: underline"> no business for the search term {{message}}</h2>
+    {% endif %}
+
+  </div>
+
+  <div class="row">
+
+
+    {% if businesses %}
+    <div class="row">
+      <div class="col-md-1"></div>
+
+      {% for business in businesses%}
+      <div class="row">
+          <div class="col-md-2"></div>
+          <div class="col-md-8">
+              <!-- Card -->
+              <div class="card card-cascade wider reverse">
+      
+                  <!-- Card image -->
+                  <div class="view view-cascade overlay">
+                      <img class="card-img-top" src="{{business.businessImage.url}}" alt="Card image cap">
+                      <a href="#!">
+                          <div class="mask rgba-white-slight">
+                          </div>
+                      </a>
+                  </div>
+      
+                  <!-- Card content -->
+                  <div class="card-body card-body-cascade text-center">
+      
+                      <!-- Title -->
+                      <h4 class="card-title"><strong>business name: {{business.businessName}}</strong></h4>
+                      <!-- Subtitle -->
+                      <h6 class="font-weight-bold indigo-text py-2"></h6>
+                      <!-- Text -->
+                      <p class="card-text">Location: {{business.businessLocation}}
+                      </p>
+      
+                      
+                      <address>
+                          Contat us  <a href="{{business.businessEmail}}">{{business.businessName}}</a>.<br>
+                          Email: {{business.businessEmail}}<br>
+                          
+                      </address>
+      
+                  </div>
+      
+              </div>
+              <!-- Card -->
+      
+          </div>
+      
+
+      <div class="col-md-1"></div>
+
+    </div><br>
+    {% endfor%}
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
