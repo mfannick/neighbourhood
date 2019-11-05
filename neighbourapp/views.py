@@ -11,9 +11,17 @@ from .email import send_welcome_email
 # Create your views here.
 @login_required(login_url='/')
 def homePage(request):
-    posts=Post.objects.all()
+    posts=Post.objects.filter(postNeighbourName=request.user.neighbour.neighbourName)
+    businesses=Business.objects.filter(businessLocation=request.user.neighbour.neighbourName)
+    polices=Police.objects.filter(policeLocation=request.user.neighbour.neighbourName)
     user=request.user
-    return render(request,'neighbour/homePage.html' ,{'posts':posts, 'user':user})
+    context={
+        'posts':posts, 
+        'user':user ,
+        'businesses':businesses,
+        'polices':polices
+        }
+    return render(request,'neighbour/homePage.html',context)
 
 def signUp(request):
     currentUser=request.user
@@ -121,7 +129,17 @@ def post(request):
     else:
         form=PostForm()
     return render(request,'neighbour/post.html',{'form':form})
+@login_required(login_url='/')
+def searchBusinesses(request):
+    if 'business' in request.GET and request.GET['business']:
+        search_term=request.GET.get('business')
+        businesses=Business.searchBusiness(search_term)
+        message = f"{search_term}"
 
+        return render(request,'neighbour/search.html',{'message':message,'businesses':businesses})
+    else:
+        message='no search yet'
+        return render(request,'neighbour/search.html',{'message':message})
 
 
 
