@@ -42,4 +42,6 @@ class UpdateNeighbour(forms.ModelForm):
         model=models.Neighbour
         fields=['neighbourLocation','neighbourName']
 
+    
+
 
