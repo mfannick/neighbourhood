@@ -14,7 +14,7 @@
      -Python
      -Django 
    ### BDD
-   <img src='#' alt='image'>
+   <img src='./media/neighbour.png' alt='image'>
 
 
    ### Contact information
